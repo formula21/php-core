@@ -1,0 +1,12 @@
+## Composer
+composer.*
+/vendor/
+!composer.json
+
+
+## Eclipose
+/.settings/
+.buildpath
+.project
+
+## GIT

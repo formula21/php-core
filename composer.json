@@ -1,0 +1,23 @@
+{
+	"name" : "formula21/php-core",
+	"description" : "The project to encapsulate all helper classes, needed to successfully build other projects.",
+	"authors" : [
+		{
+			"name" : "Anweshan Roy Chowdhury",
+			"email" : "anweshanrc15@gmail.com",
+			"homepage" : "https://formula21.github.io",
+			"role" : "Developer"
+		}
+	],
+	"license" : "MIT",
+	"require" : {
+		"php" : ">=7.0.0",
+		"intervention/image" : "^2.5.1",
+		"ralouphie/mimey" : "^2.1.0"
+	},
+	"autoload" : {
+		"psr-4" : {
+			"Anweshan\\" : "src/Anweshan"
+		}
+	}
+}
