@@ -27,7 +27,9 @@ namespace Anweshan\Http\Response\Headers;
 
 use Anweshan\Filesystem\FilesystemInterface;
 use Anweshan\Http\Http;
-use Anweshan\Http\Response\Response;
+use Anweshan\Http\Response\{
+  Response, ResponseException
+};
 
 /**
  * The class ContentType is an implementation of the Content-Type header sent at response by the server to the browser.
@@ -51,7 +53,7 @@ class ContentType extends AbstractResponse
     protected const HEADER_NAME = 'Content-Type';
 
     private $mime = NULL;
-    
+
     /**
      * Initializes the members.
      * @param Response $response The response to be set.
@@ -62,13 +64,13 @@ class ContentType extends AbstractResponse
        $this->setMime($mime);
 
     }
-    
+
     /**
      * Set the mime.
-     * @param string $mime The mime of the object to be specified.
+     * @param string|null $mime The mime of the object to be specified.
      * @return \Anweshan\Http\Response\Headers\ContentType Instance of the class itself is returned for chaining.
      */
-    public function setMime(string $mime){
+    public function setMime(?string $mime){
       if(!empty($mime) && is_string($mime) && strlen($mime) > 0){
           $this->mime = $mime;
       }
@@ -93,8 +95,10 @@ class ContentType extends AbstractResponse
 
         if(($file = parent::run($file)) && false !== Http::toFileInterface($file)){
             $mime = $this->getMime() ?? $file->getMime();
-            if($mime){
+            if(!is_null($mime)){
                 $this->response->$headername = $mime;
+            }else{
+               throw new ResponseException("Unexpected null in mime");
             }
         }
         return $file;
