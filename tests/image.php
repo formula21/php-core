@@ -49,7 +49,11 @@ if($dir){
   }else if(strpos($url['path'],'favicon.ico') !== false){
     # Purely my way of doing this.
 		$favicon = $source->get('/favicon.ico');
+    // Optionally chain setHeaders() here
 		$img = $response_api->run($favicon);
+    if($img){
+      $response_api->setResponseCode(Anweshan\Http\HTTPCode::HTTP_OK)->output($favicon);
+    }
 	}else{
     try{
 
