@@ -9,7 +9,7 @@ function partial_content(Anweshan\Filesystem\File\FileInterface $file, int chunk
 
 	  $size = $file->getSize();
 	  $range = '';
-	  $expires = Http::getGMT(time()-$expiry_time);
+	  $expires = Anweshan\Http\Http::getGMT(time()-$expiry_time);
 	  // We have to go for partial content...
 	  if(isset($_SERVER['HTTP_RANGE'])){
 		@list($size_unit, $range) = explode('=', $_SERVER['HTTP_RANGE'], 2);
