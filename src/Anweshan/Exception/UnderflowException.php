@@ -25,8 +25,6 @@ SOFTWARE.
  */
 namespace Anweshan\Exception;
 
-use Anweshan\Exception\RuntimeException;
-
 /**
  * The exception UnderflowException is raised if an output is expected from a address which is empty or inexistent.
  * 
@@ -38,7 +36,7 @@ use Anweshan\Exception\RuntimeException;
  * @version 2
  * @license MIT
  */
-class UnderflowException extends RuntimeException
+class UnderflowException extends \Anweshan\Exception\RuntimeException
 {
 	# Nothing to override
 }

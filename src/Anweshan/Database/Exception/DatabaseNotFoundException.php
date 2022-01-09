@@ -1,9 +1,8 @@
 <?php
 namespace Anweshan\Database\Exception;
 
-use Anweshan\Database\Exception\DatabaseException;
 
-class DatabaseNotFoundException extends DatabaseException
+class DatabaseNotFoundException extends \Anweshan\Database\Exception\DatabaseException
 {
    # Nothing to override.
 }

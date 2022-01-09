@@ -1,9 +1,7 @@
 <?php
 namespace Anweshan\Database\Exception;
 
-use Anweshan\Database\Exception\DatabaseException;
-
-class ConnectionException extends ConnectionException
+class ConnectionException extends \Anweshan\Database\Exception\ConnectionException
 {
   # Nothing to override.
 }

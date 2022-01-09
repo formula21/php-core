@@ -27,7 +27,7 @@ namespace Anweshan\Http\Response\Headers;
 use Anweshan\Http\Http;
 
 use Anweshan\Exception\{
-  InvalidArgumentException, OutOfRangeException, NegativeNumberException};
+  OutOfRangeException, NegativeNumberException};
 use Anweshan\Filesystem\{
   FilesystemInterface, Stream\Stream, Stream\File};
 
@@ -137,7 +137,7 @@ class ContentRange extends AbstractResponse{
               }
               $arr[] = null;
               $lowerLimit = intval($arr[0]);
-              $percent = floatval(self::PERCENT_INCREASE / 100);
+              # $percent = floatval(self::PERCENT_INCREASE / 100);
               $upperLimit = $arr[1] ?? intval(($size * $lowerLimit) + $lowerLimit) - 1;
               if($upperLimit >= $size){
                  $upperLimit = $size - 1;

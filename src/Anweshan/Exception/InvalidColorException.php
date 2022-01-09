@@ -25,8 +25,6 @@ SOFTWARE.
  */
 namespace Anweshan\Exception;
 
-use Anweshan\Exception\UnexpectedValueException;
-
 /**
  * 
  * The exception InvalidColorException is the color is invalid or unexpected.
@@ -38,7 +36,7 @@ use Anweshan\Exception\UnexpectedValueException;
  * @version 2
  * @license MIT 
  */
-class InvalidColorException extends UnexpectedValueException
+class InvalidColorException extends \Anweshan\Exception\UnexpectedValueException
 {
 	# Nothing to override
 }

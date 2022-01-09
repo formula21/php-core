@@ -25,8 +25,6 @@ SOFTWARE.
  */
 namespace Anweshan\Exception;
 
-use Anweshan\Exception\RuntimeException;
-
 /**
  * The exception UnexpectedValueException is raised if the input (or data-type) is unexpected.
  *
@@ -37,7 +35,7 @@ use Anweshan\Exception\RuntimeException;
  * @version 2
  * @license MIT
  */
-class UnexpectedValueException extends RuntimeException
+class UnexpectedValueException extends \Anweshan\Exception\RuntimeException
 {
 	# Nothing to override
 }

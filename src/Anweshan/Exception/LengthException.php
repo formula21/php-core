@@ -25,8 +25,6 @@ SOFTWARE.
  */
 namespace Anweshan\Exception;
 
-use Anweshan\Exception\LogicException;
-
 /**
  * The exception LengthException.
  * 
@@ -38,7 +36,7 @@ use Anweshan\Exception\LogicException;
  * @version 2
  * @license MIT
  */
-class LengthException extends LogicException
+class LengthException extends \Anweshan\Exception\LogicException
 {
 	# Nothing to override
 }

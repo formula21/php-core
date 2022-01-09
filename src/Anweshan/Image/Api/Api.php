@@ -34,8 +34,6 @@ use Anweshan\Exception\{
     InvalidArgumentException, DriverException
 };
 
-use Anweshan\Image\Manipulators\ManipulatorInterface;
-
 use Anweshan\Filesystem\{
     File\FileInterface, Stream\Stream, Stream\StreamInterface
 };
@@ -61,7 +59,7 @@ class Api implements ApiInterface{
 	protected $imageManager;
 
 	/**
-	 * @var ManipulatorInterface[]|null $manipulators Collection of manipulators.
+	 * @var \Anweshan\Image\Manipulators\ManipulatorInterface[]|null $manipulators Collection of manipulators.
 	 * @access protected Accessible only within the package.
 	 */
 	protected $manipulators;
@@ -69,7 +67,7 @@ class Api implements ApiInterface{
 	/**
 	 * Create an runnable instance.
 	 * @param ImageManager|string $imageManager The image manager or a driver name for image manager
-	 * @param ManipulatorInterface[] $manipulators Collection of manipulators.
+	 * @param \Anweshan\Image\Manipulators\ManipulatorInterface[] $manipulators Collection of manipulators.
 	 * @return void
 	 */
 	public function __construct($imageManager, array $manipulators)
@@ -125,14 +123,14 @@ class Api implements ApiInterface{
 
 	/**
 	 * Set the manipulators.
-	 * @param ManipulatorInterface[] $manipulators Collection of manipulators.
+	 * @param \Anweshan\Image\Manipulators\ManipulatorInterface[] $manipulators Collection of manipulators.
 	 * @return void
 	 * @throws InvalidArgumentException If a manipulator is not `instanceof` {@link \Anweshan\Image\Manipulators\ManipulatorInterface ManipulatorInterface}.
 	 */
 	public function setManipulators(array $manipulators)
 	{
 		foreach ($manipulators as $manipulator) {
-			if (!($manipulator instanceof ManipulatorInterface)) {
+		    if (!($manipulator instanceof \Anweshan\Image\Manipulators\ManipulatorInterface)) {
 				throw new InvalidArgumentException('Not a valid manipulator.');
 			}
 		}
@@ -142,7 +140,7 @@ class Api implements ApiInterface{
 
 	/**
 	 * Get the manipulators.
-	 * @return ManipulatorInterface[] Collection of manipulators.
+	 * @return \Anweshan\Image\Manipulators\ManipulatorInterface[] Collection of manipulators.
 	 */
 	public function getManipulators()
 	{

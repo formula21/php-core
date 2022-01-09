@@ -25,8 +25,6 @@ SOFTWARE.
  */
 namespace Anweshan\Exception;
 
-use Anweshan\Exception\UnexpectedValueException;
-
 /**
  * 
  * The exception NegativeNumberException is a negative number is unexpected.
@@ -38,7 +36,7 @@ use Anweshan\Exception\UnexpectedValueException;
  * @version 2
  * @license MIT 
  */
-class NegativeNumberException extends UnexpectedValueException
+class NegativeNumberException extends \Anweshan\Exception\UnexpectedValueException
 {
 	# Nothing to override
 }

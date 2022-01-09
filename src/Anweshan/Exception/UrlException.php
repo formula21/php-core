@@ -26,9 +26,7 @@ SOFTWARE.
 
 namespace Anweshan\Exception;
 
-use Anweshan\Exception\DomainException;
-
-class UrlException extends DomainException
+class UrlException extends \Anweshan\Exception\DomainException
 {
    # Nothing to override.
 }

@@ -25,8 +25,6 @@ SOFTWARE.
  */
 namespace Anweshan\Exception;
 
-use Anweshan\Exception\RuntimeException;
-
 /**
  * The exception RangeException is raised if the range is not sufficient.
  * 
@@ -38,7 +36,7 @@ use Anweshan\Exception\RuntimeException;
  * @version 2
  * @license MIT
  */
-class RangeException extends RuntimeException
+class RangeException extends \Anweshan\Exception\RuntimeException
 {
 	# Nothing to override
 }

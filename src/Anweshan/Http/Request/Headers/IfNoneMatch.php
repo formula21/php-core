@@ -113,9 +113,7 @@ class IfNoneMatch
         if($headers){
             $headers = get_object_vars($headers);
             if($file && false !== Http::toFileInterface($file)){
-                // Check and renew or do it.
-                // To check for Last-Modified is still a challenge.
-                // FIXME: Primitive
+                // LEAVE AS WE DO NOT KNOW THIS YET. 
             }
             foreach($headers as $k=>$v){
                 header("$k:$v");

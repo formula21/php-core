@@ -25,9 +25,7 @@ SOFTWARE.
 
 namespace Anweshan\Exception;
 
-use Anweshan\Exception\LogicException;
-
-class AuthenticationException extends LogicException
+class AuthenticationException extends \Anweshan\Exception\LogicException
 {
     # Nothing to override.
 }

@@ -25,8 +25,6 @@ SOFTWARE.
  */
 namespace Anweshan\Exception;
 
-use Anweshan\Exception\LogicException;
-
 /**
  * The exception ClassNotFoundException is thrown if a class is non-existent.
  *
@@ -38,7 +36,7 @@ use Anweshan\Exception\LogicException;
  * @version 2
  * @license MIT
  */
-class ClassNotFoundException extends LogicException
+class ClassNotFoundException extends \Anweshan\Exception\LogicException
 {
 	# Nothing to override
 }

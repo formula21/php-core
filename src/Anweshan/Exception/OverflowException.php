@@ -25,8 +25,6 @@ SOFTWARE.
  */
 namespace Anweshan\Exception;
 
-use Anweshan\Exception\RuntimeException;
-
 /**
  * The exception OverflowException is raised if inputs are put at a location which is in the stack/memory but is full at the moment.
  * 
@@ -38,7 +36,7 @@ use Anweshan\Exception\RuntimeException;
  * @version 2
  * @license MIT
  */
-class OverflowException extends RuntimeException
+class OverflowException extends \Anweshan\Exception\RuntimeException
 {
 	# Nothing to override
 }

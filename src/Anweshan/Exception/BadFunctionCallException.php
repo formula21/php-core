@@ -25,8 +25,6 @@ SOFTWARE.
  */
 namespace Anweshan\Exception;
 
-use Anweshan\Exception\LogicException;
-
 /**
  * The exception BadFunctionCallException if a "bad" function is called.
  * 
@@ -38,7 +36,7 @@ use Anweshan\Exception\LogicException;
  * @version 2
  * @license MIT
  */
-class BadFunctionCallException extends LogicException
+class BadFunctionCallException extends \Anweshan\Exception\LogicException
 {
 	# Nothing to override
 }

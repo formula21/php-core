@@ -25,8 +25,6 @@ SOFTWARE.
  */
 namespace Anweshan\Exception;
 
-use Anweshan\Exception\BadFunctionCallException;
-
 /**
  * The exception BadMethodCallException if a "bad" method is called/invoked.
  * 
@@ -38,7 +36,7 @@ use Anweshan\Exception\BadFunctionCallException;
  * @version 2
  * @license MIT
  */
-class BadMethodCallException extends BadFunctionCallException
+class BadMethodCallException extends \Anweshan\Exception\BadFunctionCallException
 {
 	# Nothing to override
 }

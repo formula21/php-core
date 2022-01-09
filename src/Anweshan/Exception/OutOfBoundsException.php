@@ -25,8 +25,6 @@ SOFTWARE.
  */
 namespace Anweshan\Exception;
 
-use Anweshan\Exception\RuntimeException;
-
 /**
  * The exception OutOfBoundsException is raised if the index of a data-structure (e.g. array) is out of the bounds.
  * 
@@ -38,7 +36,7 @@ use Anweshan\Exception\RuntimeException;
  * @version 2
  * @license MIT
  */
-class OutOfBoundsException extends RuntimeException
+class OutOfBoundsException extends \Anweshan\Exception\RuntimeException
 {
 	# Nothing to override
 }
