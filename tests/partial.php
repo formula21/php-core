@@ -2,7 +2,7 @@
 
 require_once dirname(__DIR__).'/vendor/autoload.php';
 
-function partial_content(Anweshan\Filesystem\File\FileInterface $file, int chunk_size = 16 ,int $min_threshold = 3, int $expiry_time = 1000){
+function partial_content(Anweshan\Filesystem\File\FileInterface $file, int $chunk_size = 16 ,int $min_threshold = 3, int $expiry_time = 1000){
 	
 	$mime = $file->getMime();
 	if(stripos($mime, 'audio') !== false || stripos($mime, 'video') !== false){
