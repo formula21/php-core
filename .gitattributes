@@ -13,3 +13,4 @@
 /.project export-ignore
 /composer.phar export-ignore
 /composer.bat export-ignore
+/lib export-ignore
