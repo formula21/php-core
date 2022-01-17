@@ -24,7 +24,7 @@ SOFTWARE.
 
  */
 namespace Anweshan\Filesystem\File;
-use Exception;
+use Anweshan\Filesystem\FilesystemException;
 
 /**
  * The exception FileException is usually thrown when the a file is not found.
@@ -38,7 +38,7 @@ use Exception;
  * @version 2
  * @license MIT
  */
-class FileException extends Exception
+class FileException extends FilesystemException
 {
 	# Nothing to override
 }

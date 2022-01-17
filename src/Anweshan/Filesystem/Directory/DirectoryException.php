@@ -25,7 +25,7 @@ SOFTWARE.
  */
 namespace Anweshan\Filesystem\Directory;
 
-use Exception;
+use Anweshan\Filesystem\FilesystemException;
 
 /**
  * The exception DirectoryException is raised if the nature of exception is unknown, but occurs while doing a directory operation.
@@ -40,7 +40,7 @@ use Exception;
  * @version 2
  * @license MIT
  */
-class DirectoryException extends Exception
+class DirectoryException extends FilesystemException
 {
     # Nothing to override
 }

@@ -25,7 +25,7 @@ SOFTWARE.
  */
 namespace Anweshan\Filesystem\Stream;
 
-use Exception;
+use Anweshan\Filesystem\FilesystemException;
 
 /**
  * The exception StreamException is raised if there is something wrong with the stream which is interpretted.
@@ -38,7 +38,7 @@ use Exception;
  * @version 2
  * @license MIT
  */
-class StreamException extends Exception
+class StreamException extends FilesystemException
 {
 }
 
