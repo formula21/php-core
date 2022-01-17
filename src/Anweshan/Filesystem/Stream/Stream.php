@@ -22,7 +22,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
- */
+*/
 namespace Anweshan\Filesystem\Stream;
 
 use Anweshan\Exception\InvalidArgumentException;
@@ -100,10 +100,11 @@ class Stream implements StreamInterface
 
 
     /**
-     *
-     * @param mixed $data Data which is immutable
+     * Constructs a stream of data.
+     * @param mixed $data Data to be streamed. This is immutable.
      * @param string $filename The filename if any.
      * @param string $extension The file extension if any.
+     * @param string $path The path of the file (if any).
      */
     public function __construct($data, ?string $filename = NULL, ?string $extension = NULL, ?string $path = NULL){
         $this->data = $data;
