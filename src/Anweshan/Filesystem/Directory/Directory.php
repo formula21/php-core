@@ -194,7 +194,8 @@ class Directory implements DirectoryInterface
 
         $path = trim($path);
 
-        if($contents == NULL || !$contents->exists() || (!$contents->isFilename() && !$contents->isExtension())){
+        if($contents == NULL || !$contents->exists() || 
+            (!$contents->isFilename() && !$contents->isExtension())){
             throw new InvalidArgumentException("Not a valid stream.");
         }
 
