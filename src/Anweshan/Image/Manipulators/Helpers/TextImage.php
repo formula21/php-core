@@ -160,7 +160,7 @@ final class TextImage
      * @param int $angle The angle of the image.
      * @param int $resolution The resolution of the image.
      */
-    public function __construct($font_path, string $text, int $width = self::MAX_SIZE, int $height = self::MAX_SIZE, int $font_size = 0, int $image_type = self::IMAGE_JPEG, int $angle = self::DEFAULT_ANGLE, int $resolution = self::DEFAULT_RESOLUTION_PERCENTAGE, $background = null, $foreground = null){
+    public function __construct($font_path, string $text, int $width = self::MAX_SIZE, int $height = self::MAX_SIZE, int $font_size = self::MIN_FONT_SIZE, int $image_type = self::IMAGE_JPEG, int $angle = self::DEFAULT_ANGLE, int $resolution = self::DEFAULT_RESOLUTION_PERCENTAGE, $background = null, $foreground = null){
         $this->setFontPath($font_path)
         ->setText($text)
         ->setBackground($background)
@@ -181,7 +181,7 @@ final class TextImage
      * @throws UnreadableFileException The file cannot be read properly.
      * @return TextImage Self referenced for chaining.
      */
-    public final function setFontPath($font_path) : TextImage {
+    public function setFontPath($font_path) : TextImage {
         if($font_path == NULL){
             throw new InvalidArgumentException("The argument must be a valid font file");
         }
@@ -213,7 +213,7 @@ final class TextImage
      * @throws InvalidArgumentException If the text to be used is empty.
      * @return TextImage Self referenced for chaining.
      */
-    public final function setText(string $text) : TextImage {
+    public function setText(string $text) : TextImage {
         if(empty($text)){
             throw new InvalidArgumentException("The argument must be any valid chracter");
         }
@@ -223,10 +223,15 @@ final class TextImage
     
     /**
      * Set the background color.
+     * 
+     * The parameter can accept any name or hex (with/without #) as a color. 
+     * So all names provided in {@link \Anweshan\Image\Manipulators\Helpers\Color} are valid.
+     *  
      * @param Color|string $background The background color.
      * @return TextImage Self referenced for chaining.
+     * @see \Anweshan\Image\Manipulators\Helpers\Color
      */
-    public final function setBackground($background = NULL): TextImage {
+    public function setBackground($background = NULL): TextImage {
         if($background == NULL){
             $background = array_rand(array_flip(self::PREFERRED_BACKGROUND_HEX));
         }
@@ -241,10 +246,15 @@ final class TextImage
     
     /**
      * Set the forground color.
+     * 
+     * The parameter can accept any name or hex (with/without #) as a color. 
+     * So all names provided in {@link \Anweshan\Image\Manipulators\Helpers\Color} are valid. 
+     * 
      * @param Color|string $foreground The foreground color.
      * @return TextImage Self referenced for chaining.
+     * @see \Anweshan\Image\Manipulators\Helpers\Color
      */
-    public final function setForeground($foreground = NULL): TextImage {
+    public function setForeground($foreground = NULL): TextImage {
         if($foreground == NULL){
             $foreground = self::WHITE_FOREGROUND_HEX;
         }
@@ -258,14 +268,27 @@ final class TextImage
     }
     
     /**
+     * Set the color of the image.
+     * 
+     * The parameters can accept any name or hex (with/without #) as a color. 
+     * So all names provided in {@link \Anweshan\Image\Manipulators\Helpers\Color} are valid.
+     *  
+     * @param Color|string $forground The foreground color.
+     * @param Color|string $background The background color.
+     * @return TextImage Self referenced for chaining.
+     */
+    public function setColor($forground = NULL, $background = NULL) : TextImage{
+        return $this->setForeground($forground)->setBackground($background);
+    }
+    
+    /**
      * Set the width.
      * @param int $width The width of the image in pixels.
      * @throws NegativeNumberException The width of an image must be positive.
      * @throws OutOfBoundsException The width of the image cannot exceed MAX_SIZE.
      * @return TextImage Self referenced for chaining.
-     *
      */
-    public final function setWidth(int $width) : TextImage {
+    public function setWidth(int $width) : TextImage {
         if($width < 0){
             throw new NegativeNumberException("The width of the image cannot be negative.");
         }
@@ -288,7 +311,7 @@ final class TextImage
      * @param int $height The height of the image in pixels.
      * @return TextImage Self referenced for chaining.
      */
-    public final function setHeight(int $height) : TextImage {
+    public function setHeight(int $height) : TextImage {
         if($height < 0){
             throw new NegativeNumberException("The height of the image cannot be negative.");
         }
@@ -307,12 +330,31 @@ final class TextImage
     }
     
     /**
+     * Sets the dimensions of the image.
+     * @param int $width The width of the image.
+     * @param int $height The height of the image.
+     * @return TextImage Self referenced for chaining. 
+     */
+    public function setDimensions(int $width, int $height) : TextImage {
+        return $this->setWidth($width)->setHeight($height);
+    }
+    
+    /**
+     * Sets the square size dimensions of the image.
+     * @param int $size The width & height of the image in pixels.
+     * @return TextImage Self referenced for chaining.
+     */
+    public function setSize(int $size) : TextImage {
+        return $this->setDimensions($size, $size);
+    }
+    
+    /**
      * Set the font size of the character.
      * @param int $font_size The font size of the character in points.
      * @throws NegativeNumberException The font size cannot be negative.
      * @return TextImage Self referenced for chaining.
      */
-    public final function setFontSize(int $font_size): TextImage {
+    public function setFontSize(int $font_size): TextImage {
         if($font_size < self::MIN_FONT_SIZE){
             throw new NegativeNumberException("Font Size cannot be negative.");
         }
@@ -328,7 +370,7 @@ final class TextImage
      * @throws InvalidArgumentException Thrown when the image type is invalid.
      * @return TextImage Self referenced for chaining.
      */
-    public final function setImageType(int $image_type = self::IMAGE_JPEG){
+    public function setImageType(int $image_type = self::IMAGE_JPEG){
         switch($image_type){
             case self::IMAGE_JPEG:
             case self::IMAGE_PNG:
@@ -349,7 +391,7 @@ final class TextImage
      * @throws OutOfBoundsException Raised if the angle of rotation is not between 0 and 359 [both inclusive].
      * @return TextImage Self referenced for chaining.
      */
-    public final function setAngle(int $angle = self::DEFAULT_ANGLE){
+    public function setAngle(int $angle = self::DEFAULT_ANGLE){
         if($angle < 0){
             throw new NegativeNumberException("The angle of rotation cannot be negative");
         }
@@ -369,7 +411,7 @@ final class TextImage
      * @throws OutOfBoundsException Raised if the resolution is not between 0 and 100 [both inclusive].
      * @return TextImage Self referenced for chaining.
      */
-    public final function setResolution(int $resolution = self::DEFAULT_RESOLUTION_PERCENTAGE){
+    public function setResolution(int $resolution = self::DEFAULT_RESOLUTION_PERCENTAGE){
         if($resolution < 0){
             throw new NegativeNumberException("The resolution cannot be negative");
         }
@@ -386,7 +428,7 @@ final class TextImage
      * Get the font path.
      * @return string The full path of the font file to be used.
      */
-    public final function getFontPath() : FileInterface {
+    public function getFontPath() : FileInterface {
         return $this->font_path;
     }
     
@@ -394,26 +436,24 @@ final class TextImage
      * Get the characters to be made an image.
      * @return string The characters which may be alpha-numeric or special.
      */
-    public final function getText() : string{
+    public function getText() : string{
         return $this->text;
     }
     
     /**
      * The background color to be used.
-     * @return string The color format which may is in hex.
+     * @return Color The color format which may is in hex.
      */
-    public final function getBackground() : string{
-        if(is_null($this->background)){
-            return '';
-        }
+    public function getBackground() : Color{
+        return $this->background;
         
     }
     
     /**
      * The forground color to be used.
-     * @return string The color format which may is in hex.
+     * @return Color The color format which may is in hex.
      */
-    public final function getForeground() : string{
+    public function getForeground() : Color{
         return $this->foreground;
     }
     
@@ -421,7 +461,7 @@ final class TextImage
      * The width of the image.
      * @return int The width in pixels.
      */
-    public final function getWidth(): int{
+    public function getWidth(): int{
         return $this->width;
     }
     
@@ -429,7 +469,7 @@ final class TextImage
      * The height of the image.
      * @return int The height in pixels.
      */
-    public final function getHeight(): int{
+    public function getHeight(): int{
         return $this->height;
     }
     
@@ -437,7 +477,7 @@ final class TextImage
      * The font-size of the character.
      * @return int The font-size in pixels.
      */
-    public final function getFontSize(): int{
+    public function getFontSize(): int{
         return $this->font_size;
     }
     
@@ -445,7 +485,7 @@ final class TextImage
      * Get the angle of rotation;
      * @return int The angle in degrees.
      */
-    public final function getAngle() : int{
+    public function getAngle() : int{
         return $this->angle;
     }
     
@@ -453,7 +493,7 @@ final class TextImage
      * Get the resolution.
      * @return int The resolution in percentage.
      */
-    public final function getResolution() : int {
+    public function getResolution() : int {
         return $this->resolution;
     }
     
@@ -461,7 +501,7 @@ final class TextImage
      * Get the image type.
      * @return int The type of image.
      */
-    public final function getImageType() : int {
+    public function getImageType() : int {
         return $this->image_type;
     }
     
@@ -495,10 +535,10 @@ final class TextImage
     /**
      * Convert color object to RGB.
      * @param Color $color The color object to interpret.
-     * @return number[] An array giving the red, green and blue channel.
+     * @return array An array giving the red, green and blue channel.
      */
-    public static function colorToRGB(Color $color){
-        return array('r'=>$color->getRed(), 'g'=>$color->getGreen(), 'b'=>$color->getBlue());
+    public static function colorToRGBA(Color $color) : array{
+        return array('r'=>$color->getRed(), 'g'=>$color->getGreen(), 'b'=>$color->getBlue(), 'a'=>$color->getAlpha());
     }
     
     /**
@@ -554,7 +594,21 @@ final class TextImage
         return $obj;
     }
     
-    
+    /**
+     * Renders the text to an image.
+     * @param TextImage $textImage The object of the class TextImage.
+     * @param string|null|bool $path The flag denoting if the output is a resource or argument or file.
+     * @param string $jpeg_extension The default jpeg file extension to be used as jpeg can be denoted as 'jpeg', 'jpe', 'jpg'.
+     * @throws InvalidArgumentException Raised if any argument is invalid.
+     * @throws DriverException Raised if the `gd` library is not loaded.
+     * @throws BadFunctionCallException Raised if any of the functions presented by `gd` library is called but is not present.
+     * @throws DirectoryNotFoundException Raised if the directory of the path presented is not found.
+     * @throws FileExistsException Raised if the file to be written to the directory with a particular name & extension is already exists.
+     * @throws FileException Raised if there are any recurring problems with any file used in the workspace.
+     * @throws RuntimeException Raised if there are any problems with the resource creation.
+     * @throws FilesystemException Raised if the type of problem is within the filesystem, but cannot be determined if the filesystem is a directory or stream or file itself.
+     * @return resource|\Anweshan\Util\Argument|\Anweshan\Filesystem\File\FileInterface|boolean If parameter `path` is boolean, then the gd resource is returned, else if it is null then an many argument with properties are returned, else if it a valid string path, then the file is returned, else false is returned. 
+     */
     public static function text(TextImage $textImage, $path, string $jpeg_extension = self::JPEG_DEFAULT_EXTENSION){
         
         if($textImage == null){
@@ -569,7 +623,7 @@ final class TextImage
             throw new DriverException("The image driver is not loaded!!");
         }
         
-        $required_functions = array_unique(['imagecreatetruecolor', 'imagecolorallocate', 'imagefill', 'imagettftext', 'imagesx', 'imagesy', 'imagettfbbox', ]);
+        $required_functions = array_unique(['imagecreatetruecolor', 'imagecolorallocatealpha', 'imagefill', 'imagettftext', 'imagesx', 'imagesy', 'imagettfbbox', ]);
         
         foreach($required_functions as $v){
             if(!function_exists($v)){
@@ -577,7 +631,7 @@ final class TextImage
             }
         }
         
-        if(!is_null($path) || !is_bool($path) || (!is_string($path) || strlen($path) == 0)){
+        if(!is_null($path) && !is_bool($path) && (!is_string($path) || strlen($path) == 0)){
             throw new InvalidArgumentException("The path parameter can either be a boolean or null or a non-empty string");
         }
         
@@ -634,9 +688,9 @@ final class TextImage
             $height = intval(self::MAX_SIZE / 2);
         }
         
-        list($background, $foreground, $image_type, $font_size, $angle) = array(array_values(self::colorToRGB($textImage->getBackground())), array_value(self::colorToRGB($textImage->getForeground())), $textImage->getImageType(), $textImage->getFontSize(), $textImage->getAngle());
+        list($background, $foreground, $image_type, $font_size, $angle) = array(array_values(self::colorToRGBA($textImage->getBackground())), array_values(self::colorToRGBA($textImage->getForeground())), $textImage->getImageType(), $textImage->getFontSize(), $textImage->getAngle());
         
-        $resolution = self::fomatResolution($image_type, $textImage->getResolution());
+        $resolution = self::formatResolution($image_type, $textImage->getResolution());
         
         list($img_function, $extension, $img_exists) = array_fill(0, 3, NULL);
         $img_function_args = array_fill(0, 3, NULL);
@@ -691,7 +745,7 @@ final class TextImage
         }
         
         // Allocating the background & forground colors to the image pallate.
-        list($foreground, $background) = array(@imagecolorallocate($im, ...$foreground), @imagecolorallocate($im, ...$background));
+        list($foreground, $background) = array(@imagecolorallocatealpha($im, ...$foreground), @imagecolorallocatealpha($im, ...$background));
         
         if(!$foreground || !$background){
             throw new RuntimeException("Some error occured during creating image");
@@ -706,7 +760,24 @@ final class TextImage
         list($xi, $yi) = array(@imagesx($im), @imagesy($im));
         
         // Get the box of 8 points.
+        if($font_size == 0){
+            $font_size = intval((0.5 * $width + 0.5 * $height)/2);
+            
+            if($font_size > $height){
+                $font_size = (int)(0.99 * $height);
+            }
+            
+            if($font_size > $width){
+                $font_size = (int)(0.99 * $width);
+            }
+            // var_dump($font_size);
+            // exit;
+        }
+        
         $box = @imagettfbbox($font_size, $angle, $font_path->getPath(), $text);
+        
+        # var_dump($box);
+        # exit;
         
         if(!$xi || !$yi || !$box){
             throw new RuntimeException("Some error occured during creating image");
@@ -752,8 +823,10 @@ final class TextImage
             }
             return $file;
         }catch(FilesystemException $e){
-            return false;
+            // Suppress all exceptions.
         }
+        
+        return false;
     }
 }
     
