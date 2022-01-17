@@ -389,7 +389,14 @@ class Color {
      * @var int|double $alpha The alpha value.
      */
     protected $alpha;
-
+    
+    /**
+     * The default value is set, so is the flag.
+     * @access The value can be accessed from within the class.
+     * @var bool The default values are set.
+     */
+    private $default = false;
+    
     /**
      * Create color helper instance.
      * @param string $value The color value.
@@ -400,12 +407,14 @@ class Color {
 			if ($hex = $this->getHexFromColorName($value)) {
 				$rgba = $this->parseHex($hex);
 				$alpha = 1;
+				$default = false;
 				break;
 			}
 			
 			if (preg_match(self::SHORT_RGB, $value)) {
 				$rgba = $this->parseHex($value.$value);
 				$alpha = 1;
+				$default = false;
 				break;
 			}
 			
@@ -418,20 +427,63 @@ class Color {
 			if (preg_match(self::LONG_RGB, $value)) {
 				$rgba = $this->parseHex($value);
 				$alpha = 1;
+				$default = false;
 				break;
 			}
 			
 			if (preg_match(self::LONG_ARGB, $value)) {
 				$rgba = $this->parseHex(substr($value, 2));
 				$alpha = substr($value, 0, 2) / 100;
+				$default = false;
 				break;
 			}
 			
 			$rgba = [255, 255, 255];
 			$alpha = 0;
+			$default = true;
 		} while (false);
 		
-		list($this->red, $this->blue, $this->green, $this->alpha) = array_merge($rgba, [$alpha]);
+		list($this->red, $this->blue, $this->green, $this->alpha, $this->default) = array_merge($rgba, [$alpha, $default]);
+	}
+	
+	/**
+	 * The red channel value.
+	 * @return number A number between 0 and 255
+	 */
+	public function getRed(){
+	    return $this->red;
+	}
+	
+	/**
+	 * The blue channel value.
+	 * @return number A number between 0 and 255
+	 */
+	public function getBlue(){
+	    return $this->blue;
+	}
+	
+	/**
+	 * The green channel value.
+	 * @return number A number between 0 and 255
+	 */
+	public function getGreen(){
+	    return $this->green;
+	}
+	
+	/**
+	 * The alpha channel value, represents transparancy.
+	 * @return number A number between 0 and 1
+	 */
+	public function getAlpha(){
+	    return $this->alpha;
+	}
+	
+	/**
+	 * Check if the default value is set.
+	 * @return bool Either `true` or `false`.
+	 */
+	public function isDefault(): bool{
+	   return ($this->default == true);
 	}
 	
 	/**
