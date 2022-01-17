@@ -443,7 +443,7 @@ class Color {
 			$default = true;
 		} while (false);
 		
-		list($this->red, $this->blue, $this->green, $this->alpha, $this->default) = array_merge($rgba, [$alpha, $default]);
+		list($this->red, $this->green, $this->blue, $this->alpha, $this->default) = array_merge($rgba, [$alpha, $default]);
 	}
 	
 	/**
