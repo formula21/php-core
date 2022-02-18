@@ -75,7 +75,18 @@ class Util
         foreach($segments as &$v){
             $v = Util::sanitizePath($v);
         }
-        return Util::ltrim(join(DIRECTORY_SEPARATOR, $segments), DIRECTORY_SEPARATOR);
+		
+		$d = __DIR__;
+		if($d[0] === DIRECTORY_SEPARATOR && DIRECTORY_SEPARATOR === '/'){
+			$d = true;
+		}
+		
+        $r = Util::ltrim(join(DIRECTORY_SEPARATOR, $segments), DIRECTORY_SEPARATOR);
+		
+		if($d){
+			$r = '/'.$r;
+		}
+		return $r;
     }
     
     public static function makeURL(string ...$segments){
@@ -188,7 +199,7 @@ class Util
                         $v = trim($v,'.');
                     }
                     
-                    if ( ($v = Util::rtrim($tmp.DIRECTORY_SEPARATOR.$v,DIRECTORY_SEPARATOR)) != $tmp && realpath($v) !== false ){
+                    if ( ($v = Util::rtrim($tmp.DIRECTORY_SEPARATOR.$v, DIRECTORY_SEPARATOR)) != $tmp && realpath($v) !== false ){
                         if((is_dir($v) && !self::rmdir($v)) || (is_file($v) && !@unlink($v))){
                             return false;
                         }else{
