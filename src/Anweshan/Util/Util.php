@@ -67,7 +67,7 @@ class Util
     
     public static function sanitizePath(string $path){
         $path = str_replace(self::URL_SEPARATOR, DIRECTORY_SEPARATOR, $path);
-        $path = Util::trim($path, DIRECTORY_SEPARATOR, self::URL_SEPARATOR);
+        $path = Util::rtrim($path, DIRECTORY_SEPARATOR, self::URL_SEPARATOR);
         return $path;
     }
     
@@ -75,13 +75,27 @@ class Util
         foreach($segments as &$v){
             $v = Util::sanitizePath($v);
         }
-        return ltrim(join(DIRECTORY_SEPARATOR, $segments), DIRECTORY_SEPARATOR);
+        return Util::ltrim(join(DIRECTORY_SEPARATOR, $segments), DIRECTORY_SEPARATOR);
     }
     
     public static function makeURL(string ...$segments){
         return join(self::URL_SEPARATOR, $segments);
     }
     
+	public static function rtrim(string $value, string ...$char){
+        foreach($char as $v){
+			$value = rtrim($value, $v);
+        }
+        return $value;
+    }
+	
+	public static function ltrim(string $value, string ...$char){
+        foreach($char as $v){
+			$value = ltrim($value, $v);
+        }
+        return $value;
+    }
+	
     public static function trim(string $value, string ...$char){
         foreach($char as $v){
 			$v = $v[0];
@@ -164,7 +178,7 @@ class Util
     public static function rmdir(string $dir){
         $tmp = NULL;
         try{
-            $dir = trim(realpath($dir)?:"", DIRECTORY_SEPARATOR);
+            $dir = Util::rtrim(realpath($dir)?:"", DIRECTORY_SEPARATOR);
             if(strlen($dir) > 0 && is_dir($dir)){
                 $tmp = $dir;
                 $dir = scandir($dir);
@@ -174,7 +188,7 @@ class Util
                         $v = trim($v,'.');
                     }
                     
-                    if ( ($v = trim($tmp.DIRECTORY_SEPARATOR.$v,DIRECTORY_SEPARATOR)) != $tmp && realpath($v) !== false ){
+                    if ( ($v = Util::rtrim($tmp.DIRECTORY_SEPARATOR.$v,DIRECTORY_SEPARATOR)) != $tmp && realpath($v) !== false ){
                         if((is_dir($v) && !self::rmdir($v)) || (is_file($v) && !@unlink($v))){
                             return false;
                         }else{

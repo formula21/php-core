@@ -335,7 +335,7 @@ final class TextImage
      * @param int $height The height of the image.
      * @return TextImage Self referenced for chaining. 
      */
-    public function setDimensions(int $width, int $height) : TextImage {
+    public function setSize(int $width, int $height) : TextImage {
         return $this->setWidth($width)->setHeight($height);
     }
     
@@ -344,8 +344,8 @@ final class TextImage
      * @param int $size The width & height of the image in pixels.
      * @return TextImage Self referenced for chaining.
      */
-    public function setSize(int $size) : TextImage {
-        return $this->setDimensions($size, $size);
+    public function setSquareSize(int $size) : TextImage {
+        return $this->setSize($size, $size);
     }
     
     /**

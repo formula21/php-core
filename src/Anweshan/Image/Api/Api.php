@@ -192,11 +192,7 @@ class Api implements ApiInterface{
 	 */
 	protected static function isGdResource($source): bool
 	{	
-		if (is_resource($source)) {
-			return (get_resource_type($source) == 'gd');
-		}
-		
-		return false;
+		return is_resource($source) && (get_resource_type($source) == 'gd');
 	}
 	
 	/**
@@ -210,9 +206,7 @@ class Api implements ApiInterface{
 	 * @access protected Accessed within the package itself.
 	 */
 	protected static function isImagick($source) : bool {
-		if(is_object($source))
-			return is_a($source, 'Imagick');
-		return false;
+		return is_object($source) && is_a($source, 'Imagick');
 	}
 	
 	/**
@@ -228,12 +222,20 @@ class Api implements ApiInterface{
 	 */
 	protected static function isInterventionImage($source): bool
 	{
-		if(is_object($source))
-			return is_a($source, '\Intervention\Image\Image');
-		return false;
+		return is_object($source) && is_a($source, '\Intervention\Image\Image');
 	}
 	
-	
+	/**
+	 * Determines if the current source is an instance of FileInterface or StreamInterfacr.
+	 * 
+	 * The object is checked against \Anweshan\Filesystem\File\FileInterface and \Anweshan\Filesystem\Stream\StreamInterface.
+	 * 
+	 * @param object|Image|null $source The source data
+	 * @return boolean `true` if the image is an instanceof
+	 * 				   \Anweshan\Filesystem\File\FileInterface or 			 \Anweshan\Filesystem\Stream\StreamInterface
+	 * 				   `false` otherwise.
+	 * @access protected Accessed within the package itself.
+	 */
 	protected static function isFileInterface($source) : bool{
 	    return ($source instanceof FileInterface) || ($source instanceof StreamInterface);
 	}

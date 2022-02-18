@@ -60,6 +60,7 @@ class Response extends Argument implements HttpInterface{
     public function setHeaders(?array $headers) : HttpInterface{
         if($headers && is_array($headers) && count($headers) > 0){
             foreach(array_keys($headers) as $k){
+                // FIXME: The last parameter should not be included.
                 $this->setHeader($k, $headers[$k], true);
             }
         }

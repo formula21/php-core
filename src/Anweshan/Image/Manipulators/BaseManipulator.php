@@ -138,7 +138,5 @@ abstract class BaseManipulator implements ManipulatorInterface {
 	 * @see \Anweshan\Image\Manipulators\ManipulatorInterface::__toString()
 	 */
 	abstract public function __toString() : string;
-	
-	
 }
 

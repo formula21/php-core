@@ -83,7 +83,7 @@ class Directory implements DirectoryInterface
      */
     protected function setDir(?string $dir){
         if(is_string($dir) && strlen($dir) > 0){
-            $dir = Util::trim($dir, '/', DIRECTORY_SEPARATOR);
+            $dir = Util::rtrim($dir, '/', DIRECTORY_SEPARATOR);
             if(is_dir($dir) && file_exists($dir)){
                 $dir = str_replace('/', DIRECTORY_SEPARATOR, $dir);
                 $this->dir = $dir;
@@ -215,7 +215,7 @@ class Directory implements DirectoryInterface
             return new File($path);
         }
 
-        if(strlen(Util::trim($path, '/', DIRECTORY_SEPARATOR)) == 0){
+        if(strlen(Util::rtrim($path, '/', DIRECTORY_SEPARATOR)) == 0){
             throw new InvalidArgumentException("Not a valid path");
         }
 
