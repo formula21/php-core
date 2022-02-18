@@ -77,6 +77,7 @@ class Util
         }
 		
 		$d = __DIR__;
+		
 		if($d[0] === DIRECTORY_SEPARATOR && DIRECTORY_SEPARATOR === '/'){
 			$d = true;
 		}
