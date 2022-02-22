@@ -80,6 +80,8 @@ class Util
 		
 		if($d[0] === DIRECTORY_SEPARATOR && DIRECTORY_SEPARATOR === '/'){
 			$d = true;
+		}else{
+			$d = false;
 		}
 		
         $r = Util::ltrim(join(DIRECTORY_SEPARATOR, $segments), DIRECTORY_SEPARATOR);
