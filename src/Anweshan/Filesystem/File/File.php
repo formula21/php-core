@@ -29,6 +29,13 @@ use Anweshan\Exception\InvalidArgumentException;
 use Anweshan\Filesystem\FilesystemInterface;
 
 /**
+ * The class File, is an wrapper which is itself represents a "computer file" & it's properties.
+ *
+ * To elaborate, a computer file is a computer resource for recording data in a computer storage device, primarily identified 
+ * by its file name. This wrapper is esentially an instanceof FileInterface, which looks for and gets the different properties 
+ * of the file.
+ * 
+ * The uniqueness of a file is determined at the user level limited to the "name" by which it is represented.
  *
  * @package Anweshan\Filesystem
  * @subpackage File
@@ -37,7 +44,7 @@ use Anweshan\Filesystem\FilesystemInterface;
  * @since 2021-API
  * @version 2
  * @copyright Notice of Copyright included by ARC Groups LLC. All Rights Reserved.
- * @license {@link http://gnu.org/licenses/agpl-3.0.txt AGPL-3.0-or-later}
+ * @license MIT
  */
 class File implements FileInterface{
 
@@ -46,7 +53,7 @@ class File implements FileInterface{
 
     public function __construct($path)
     {
-        $this->path = $path;
+        $this->path = !realpath($path) ? $path : realpath($path);
     }
 
     /**

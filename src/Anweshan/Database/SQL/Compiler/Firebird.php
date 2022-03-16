@@ -52,7 +52,7 @@ class Firebird extends Compiler
      */
     protected function handleOffset($offset, $limit = null)
     {
-        return ($offset < 0) ? ($limit <= 0) ? '' : ' ROWS 1 ' : ' ROWS ' . ($offset + 1);
+        return ($offset < 0) ? (($limit <= 0) ? '' : ' ROWS 1 ') : ' ROWS ' . ($offset + 1);
     }
 
     /**
