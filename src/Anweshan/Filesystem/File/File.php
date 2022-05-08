@@ -27,6 +27,8 @@ namespace Anweshan\Filesystem\File;
 
 use Anweshan\Exception\InvalidArgumentException;
 use Anweshan\Filesystem\FilesystemInterface;
+use Anweshan\Filesystem\Directory\DirectoryInterface;
+use Anweshan\Filesystem\Directory\Directory;
 
 /**
  * The class File, is an wrapper which is itself represents a "computer file" & it's properties.
@@ -115,12 +117,12 @@ class File implements FileInterface{
      * {@inheritDoc}
      * @see \Anweshan\Filesystem\File\FileInterface::getDir()
      */
-    public function getDir() :?string
+    public function getDir() : ?DirectoryInterface
     {
         if(!$this->exists()){
             return NULL;
         }
-        return pathinfo($this->path, PATHINFO_DIRNAME);
+        $dir = new Directory(pathinfo($this->path, PATHINFO_DIRNAME));
     }
 
     /**
