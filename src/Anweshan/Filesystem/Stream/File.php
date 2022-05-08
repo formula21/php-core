@@ -27,7 +27,7 @@ SOFTWARE.
 namespace Anweshan\Filesystem\Stream;
 
 use Anweshan\Filesystem\{
-    File\FileInterface, FilesystemInterface
+    File\FileInterface, FilesystemInterface, Directory\DirectoryInterface, Directory\Directory
 };
 
 /**
@@ -122,12 +122,12 @@ class File implements FileInterface{
     
     /**
      * {@inheritDoc}
-     * **NOTE:** If path is not NULL, i.e. canonical file path is set, we return the dir based on the path.
+     * **NOTE:** If path is not NULL, i.e. canonical file path is set, we return the directory (_DirectoryInterface_) based on the path.
      * @see \Anweshan\Filesystem\File\FileInterface::getDir()
      */
-    public function getDir(): ?string{
-        if($this->exists() && $this->path() != NULL){
-            return dirname($this->path);
+    public function getDir(): ?DirectoryInterface{
+        if($this->exists() && $this->getPath() != NULL){
+			return new Directory(dirname($this->path));
         }
         return NULL;
     }
