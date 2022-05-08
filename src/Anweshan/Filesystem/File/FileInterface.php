@@ -26,6 +26,7 @@ SOFTWARE.
 namespace Anweshan\Filesystem\File;
 
 use Anweshan\Filesystem\FilesystemInterface;
+use Anweshan\Filesystem\Directory\DirectoryInterface;
 
 /**
  * The interface FileInterface defines all the methods required for a File to co-exists in a Filesystem.
@@ -72,7 +73,7 @@ interface FileInterface extends FilesystemInterface
      * Gets the directory.
      * @return string|null
      */
-    public function getDir() :?string;
+    public function getDir() :?DirectoryInterface;
     
     /**
      * Gets if the file is writable.
