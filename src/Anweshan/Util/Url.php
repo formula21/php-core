@@ -337,7 +337,7 @@ final class Url
         if($url){
             return parse_url($url, PHP_URL_QUERY);
         }
-        return $_SERVER['QUERY_STRING'];
+        return $_SERVER['QUERY_STRING'] ?? "";
     }
 
     /**
