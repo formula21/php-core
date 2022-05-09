@@ -65,7 +65,7 @@ class Argument
             }
         }
     }
-
+ 	
     /**
      * PHP Magic method to set a variable.
      * @param string $name The name of the variable
@@ -98,5 +98,22 @@ class Argument
     public function __toString() : string {
         return __CLASS__;
     }
+	
+				/**
+					* Converts the object back to an array.
+					* @param Argument $arg The instance to convert to an array.
+					* @return array|NULL Returns the array of variables in the object, 
+					* 																			However there may be none or the object may be inaccessible & return null.
+					*	@throws Anweshan\Exception\InvalidArgumentException Raised if the parameter is null.
+					*/
+				public static function toArray(Argument $arg): ?array {
+								if($arg == NULL){
+											throw Anweshan\Exception\InvalidArgumentException("Args cannot be empty");
+								}
+
+								$tmp= \get_object_vars($arg);
+
+								return $tmp;
+					}
 
 }
