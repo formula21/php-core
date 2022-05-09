@@ -1,28 +1,28 @@
 <?php
 /*
- MIT License
+MIT License
 
- Copyright (c) 2021 Anweshan Roy Chowdhury
+Copyright (c) 2021 Anweshan Roy Chowdhury
 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
- The above copyright notice and this permission notice shall be included in all
- copies or substantial portions of the Software.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- SOFTWARE.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 
- */
+*/
 namespace Anweshan\Util;
 
 
@@ -50,7 +50,7 @@ class Argument
     public function __construct($array = NULL){
         $this->set($array);
     }
-
+    
     /**
      * Sets the array of properties.
      * @param array $properties The array of properties.
@@ -59,13 +59,13 @@ class Argument
         if(!is_null($properties) && is_array($properties)){
             foreach($properties as $k=>$v){
                 if(is_array($v)){
-                   $v = new self($v);
+                    $v = new self($v);
                 }
                 $this->$k = $v;
             }
         }
     }
- 	
+    
     /**
      * PHP Magic method to set a variable.
      * @param string $name The name of the variable
@@ -75,7 +75,7 @@ class Argument
     public function __set(string $name, $value){
         $this->$name = $value;
     }
-
+    
     /**
      * PHP Magic method to get a variable.
      * @param string $name The name of the variable.
@@ -85,8 +85,8 @@ class Argument
     public function __get(string $name){
         return isset($this->$name)?$this->$name:NULL;
     }
-
-
+    
+    
     /**
      * PHP Magic method which converts an object to a string.
      *
@@ -98,22 +98,21 @@ class Argument
     public function __toString() : string {
         return __CLASS__;
     }
-	
-		/**
-		* Converts the object back to an array.
-		* @param Argument $arg The instance to convert to an array.
-		* @return array|NULL Returns the array of variables in the object, 
-		* 																			However there may be none or the object may be inaccessible & return null.
-		*	@throws Anweshan\Exception\InvalidArgumentException Raised if the parameter is null.
-		*/
-		public static function toArray(Argument $arg): ?array {
-			if($arg == NULL){
-						throw Anweshan\Exception\InvalidArgumentException("Args cannot be empty");
-			}
-
-			$tmp= \get_object_vars($arg);
-
-			return $tmp;
-		}
-
+    
+    /**
+     * Converts the object back to an array.
+     * @param Argument $arg The instance to convert to an array.
+     * @return array|NULL Returns the array of variables in the object, However there may be none or the object may be inaccessible & return null.
+     * @throws Anweshan\Exception\InvalidArgumentException Raised if the parameter is null.
+     */
+    public static function toArray(Argument $arg): ?array {
+        if($arg == NULL){
+            throw Anweshan\Exception\InvalidArgumentException("Args cannot be empty");
+        }
+        
+        $tmp= \get_object_vars($arg);
+        
+        return $tmp;
+    }
+    
 }
