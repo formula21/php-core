@@ -343,15 +343,18 @@ final class Url
     /**
      * Gets the domain.
      * @param bool|string $url The url to be analyzed.
+     * @param bool $proxy scan for proxy like HTTP_X_ORIGINAL_HOST or HTTP_X_FORWARDED_HOST
      * @return mixed Gets the domain.
      */
-    public static function getDomain($url = false)
+    public static function getDomain($url = false, $proxy = true)
     {
         if ($url) {
             return parse_url($url, PHP_URL_HOST);
         }
-
-        return $_SERVER['HTTP_X_FORWARDED_HOST'] ?? $_SERVER['SERVER_NAME'];
+        // Supports tools like ngrok & localtunnel
+        $host = $proxy ? ($_SERVER['HTTP_X_ORIGINAL_HOST'] ?? $_SERVER['HTTP_X_FORWARDED_HOST'] ?? $_SERVER['SERVER_NAME']) : $_SERVER['SERVER_NAME'];
+        
+        return $host;
     }
 
     /**
