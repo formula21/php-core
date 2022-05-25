@@ -25,6 +25,8 @@ SOFTWARE.
 */
 namespace Anweshan\Util;
 
+use Anweshan\Exception\InvalidArgumentException;
+
 /**
  * The class Argument is a class which declares most of the PHP Magic Methods to assign any variable to a class and work with all or each one of them.
  *
@@ -102,11 +104,11 @@ class Argument
      * Converts the object back to an array.
      * @param Argument $arg The instance to convert to an array.
      * @return array|NULL Returns the array of variables in the object, However there may be none or the object may be inaccessible & return null.
-     * @throws Exception Raised if the parameter is null.
+     * @throws InvalidArgumentException Raised if the parameter is null.
      */
     public static function toArray(Argument $arg): ?array {
         if($arg == NULL){
-            throw new \Exception("Argument in parameter is invalid");
+            throw new InvalidArgumentException("Argument in parameter is invalid");
         }
 
         $tmp= \get_object_vars($arg);
