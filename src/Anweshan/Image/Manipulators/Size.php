@@ -541,6 +541,8 @@ class Size extends BaseManipulator {
 	public function getCrop() : array
 	{
 		
+		$this->fit = $this->fit ?? 'crop-center';
+
 		if (array_key_exists($this->fit, self::CROP_METHODS)) {
 			return self::CROP_METHODS[$this->fit];
 		}
