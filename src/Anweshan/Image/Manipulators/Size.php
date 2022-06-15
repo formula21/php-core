@@ -26,6 +26,7 @@ SOFTWARE.
  */
 namespace Anweshan\Image\Manipulators;
 use Intervention\Image\Image;
+use Intervention\Image\Size as _Size;
 
 /**
  * The class Size is used to manipulate the size of the image.
@@ -307,22 +308,17 @@ class Size extends BaseManipulator {
 	public function resolveMissingDimensions(Image $image, $width = null, $height = null) : array
 	{
 		
-		$ratio = self::getAspectRatio($image->width(), $image->height());
-		
-		// var_dump($ratio);
-		// exit;
-		
 		if(is_null($width) && is_null($height)){
 			$width = $image->width();
 			$height = $image->height();
 		}
 		
-		if(is_null($width)){
-			$width = $height * $ratio;
-		}
-		
-		if(is_null($height)){
-			$height = $width / $ratio;
+		if(is_null($width) || is_null($height)){
+			$size = (new _Size($image->width(), $image->height()))->resize($width, $height, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+
+			list($width, $height) = array($size->getWidth(), $size->getHeight());
 		}
 		
 		return [
