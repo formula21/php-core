@@ -195,6 +195,24 @@ class Size extends BaseManipulator {
 	{
 		$this->maxImageSize = $maxImageSize;
 	}
+
+		/**
+	 * Apply the device pixel ratio.
+	 * @param int $width The target image width
+	 * @param int $height The target image height
+	 * @param int $dpr The device pixel ratio
+	 * @return array The modified width and height
+	 */
+	public function applyDpr(int $width, int $height, int $dpr): array
+	{
+		$width = (int)($width * $dpr);
+		$height = (int)($height * $dpr);
+		
+		return array(
+				$width,
+				$height
+		);
+	}
 	
 	/**
 	 * Get the maximum image size in pixels.
@@ -275,6 +293,61 @@ class Size extends BaseManipulator {
 	{
 		return !is_numeric($this->dpr) || ($this->dpr < 0 || $this->dpr > 8) ? 1.0 : (float) $this->dpr;
 	}
+
+	/**
+	 * Resolve crop with zoom.
+	 * @return int[] The resolved crop.
+	 */
+	public function getCrop() : array
+	{
+		
+		$this->fit = $this->fit ?? 'crop-center';
+
+		if (array_key_exists($this->fit, self::CROP_METHODS)) {
+			return self::CROP_METHODS[$this->fit];
+		}
+		
+		$matches = array();
+		
+		if (preg_match(self::CROP_REGEX, $this->fit, $matches)) {
+			$matches[3] = isset($matches[3]) ? $matches[3] : 1;
+			
+			if ($matches[1] > 100 or $matches[2] > 100 or $matches[3] > 100) {
+				return self::CROP_METHODS['crop-center'];
+			}
+			
+			return [
+					(int) $matches[1],
+					(int) $matches[2],
+					(float) $matches[3],
+			];
+		}
+		
+		return self::CROP_METHODS['crop-center'];
+	}
+	
+	/**
+	 * Limit image size to maximum allowed image size.
+	 * @param  integer   $width  The image width.
+	 * @param  integer   $height The image height.
+	 * @return int[] The limited width and height.
+	 */
+	public function limitImageSize(int $width, int $height): array
+	{
+		if ($this->maxImageSize !== null) {
+			$imageSize = $width * $height;
+			
+			if ($imageSize > $this->maxImageSize) {
+				$width = $width / sqrt($imageSize / $this->maxImageSize);
+				$height = $height / sqrt($imageSize / $this->maxImageSize);
+			}
+		}
+		
+		return [
+				(int) $width,
+				(int) $height,
+		];
+	}
 	
 	/**
 	 * The function gets the aspect ratio.
@@ -286,7 +359,61 @@ class Size extends BaseManipulator {
 	{
 		return floatval($width/$height);
 	}
+
+	/**
+	 * Resolve the crop resize dimensions.
+	 * @param  Image   $image  The source image.
+	 * @param  integer $width  The width.
+	 * @param  integer $height The height.
+	 * @return array   The resize dimensions.
+	 */
+	public function resolveCropResizeDimensions(Image $image, int $width, int $height): array
+	{
+		$ratio = self::getAspectRatio($image->width(), $image->height());
+		
+		if ($height > ($width * $ratio)) {
+			return [$height * $ratio, $height];
+		}
+		
+		return [$width, $width * $ratio];
+	}
 	
+	/**
+	 * Resolve the crop offset.
+	 * @param  Image   $image  The source image.
+	 * @param  integer $width  The width.
+	 * @param  integer $height The height.
+	 * @return int[]   The crop offset.
+	 */
+	public function resolveCropOffset(Image $image, int $width, int $height) : array
+	{
+		list($offset_percentage_x, $offset_percentage_y) = $this->getCrop();
+		
+		$offset_x = (int) (($image->width() * $offset_percentage_x / 100) - ($width / 2));
+		$offset_y = (int) (($image->height() * $offset_percentage_y / 100) - ($height / 2));
+		
+		$max_offset_x = $image->width() - $width;
+		$max_offset_y = $image->height() - $height;
+		
+		if ($offset_x < 0) {
+			$offset_x = 0;
+		}
+		
+		if ($offset_y < 0) {
+			$offset_y = 0;
+		}
+		
+		if ($offset_x > $max_offset_x) {
+			$offset_x = $max_offset_x;
+		}
+		
+		if ($offset_y > $max_offset_y) {
+			$offset_y = $max_offset_y;
+		}
+		
+		return [$offset_x, $offset_y];
+	}
+
 	/**
 	 * Resolve missing image dimensions.
 	 * 
@@ -314,47 +441,6 @@ class Size extends BaseManipulator {
 		return [
 			(int) $width,
 			(int) $height
-		];
-	}
-	
-	/**
-	 * Apply the device pixel ratio.
-	 * @param int $width The target image width
-	 * @param int $height The target image height
-	 * @param int $dpr The device pixel ratio
-	 * @return array The modified width and height
-	 */
-	public function applyDpr(int $width, int $height, int $dpr): array
-	{
-		$width = (int)($width * $dpr);
-		$height = (int)($height * $dpr);
-		
-		return array(
-				$width,
-				$height
-		);
-	}
-	
-	/**
-	 * Limit image size to maximum allowed image size.
-	 * @param  integer   $width  The image width.
-	 * @param  integer   $height The image height.
-	 * @return int[] The limited width and height.
-	 */
-	public function limitImageSize(int $width, int $height): array
-	{
-		if ($this->maxImageSize !== null) {
-			$imageSize = $width * $height;
-			
-			if ($imageSize > $this->maxImageSize) {
-				$width = $width / sqrt($imageSize / $this->maxImageSize);
-				$height = $height / sqrt($imageSize / $this->maxImageSize);
-			}
-		}
-		
-		return [
-				(int) $width,
-				(int) $height,
 		];
 	}
 	
@@ -415,7 +501,6 @@ class Size extends BaseManipulator {
 		return $image->resizeCanvas($width, $height, 'center');
 	}
 	
-	
 	/**
 	 * Perform max resize image manipulation.
 	 * @param Image $image  The source image.
@@ -461,92 +546,6 @@ class Size extends BaseManipulator {
 		list($offset_x, $offset_y) = $this->resolveCropOffset($image, $width, $height);
 			
 		return $image->crop($width, $height, $offset_x, $offset_y);
-	}
-	
-	/**
-	 * Resolve the crop resize dimensions.
-	 * @param  Image   $image  The source image.
-	 * @param  integer $width  The width.
-	 * @param  integer $height The height.
-	 * @return array   The resize dimensions.
-	 */
-	public function resolveCropResizeDimensions(Image $image, int $width, int $height): array
-	{
-		$ratio = self::getAspectRatio($image->width(), $image->height());
-		
-		if ($height > ($width * $ratio)) {
-			return [$height * $ratio, $height];
-		}
-		
-		return [$width, $width * $ratio];
-	}
-	
-	/**
-	 * Resolve the crop offset.
-	 * @param  Image   $image  The source image.
-	 * @param  integer $width  The width.
-	 * @param  integer $height The height.
-	 * @return int[]   The crop offset.
-	 */
-	public function resolveCropOffset(Image $image, int $width, int $height) : array
-	{
-		list($offset_percentage_x, $offset_percentage_y) = $this->getCrop();
-		
-		$offset_x = (int) (($image->width() * $offset_percentage_x / 100) - ($width / 2));
-		$offset_y = (int) (($image->height() * $offset_percentage_y / 100) - ($height / 2));
-		
-		$max_offset_x = $image->width() - $width;
-		$max_offset_y = $image->height() - $height;
-		
-		if ($offset_x < 0) {
-			$offset_x = 0;
-		}
-		
-		if ($offset_y < 0) {
-			$offset_y = 0;
-		}
-		
-		if ($offset_x > $max_offset_x) {
-			$offset_x = $max_offset_x;
-		}
-		
-		if ($offset_y > $max_offset_y) {
-			$offset_y = $max_offset_y;
-		}
-		
-		return [$offset_x, $offset_y];
-	}
-	
-	/**
-	 * Resolve crop with zoom.
-	 * @return int[] The resolved crop.
-	 */
-	public function getCrop() : array
-	{
-		
-		$this->fit = $this->fit ?? 'crop-center';
-
-		if (array_key_exists($this->fit, self::CROP_METHODS)) {
-			return self::CROP_METHODS[$this->fit];
-		}
-		
-		$matches = array();
-		
-		if (preg_match(self::CROP_REGEX, $this->fit, $matches)) {
-			$matches[3] = isset($matches[3]) ? $matches[3] : 1;
-			
-			if ($matches[1] > 100 or $matches[2] > 100 or $matches[3] > 100) {
-				return self::CROP_METHODS['crop-center'];
-			}
-			
-			return [
-					(int) $matches[1],
-					(int) $matches[2],
-					(float) $matches[3],
-			];
-		}
-		
-		return self::CROP_METHODS['crop-center'];
 	}
 	
 	/**
