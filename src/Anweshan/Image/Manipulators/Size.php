@@ -247,14 +247,18 @@ class Size extends BaseManipulator {
 	
 	/**
 	 * Resolve the square parameter.
-	 * *WARNING*: This property overrides/resets/sets both _width and height_.
+	 * 
+	 * The square property is constrained to:
+	 * - `sq` must be an natural number
+	 * - Area of image defined by `sq` cannot exceed the area of the original image.
+	 * - This means `sq <= minimum(height, width)`
+	 * 
 	 * @return integer[]|array If the property is set expect an array with properties width and height OR default values.
 	 */
 	public function getSquare()
 	{
 		
-		if(!is_numeric($this->sq) || $this->sq <= 0){
-			// No we cannot set height or width
+		if(!is_numeric($this->sq) || $this->sq <= 0 || $this->sq > min($this->getWidth(), $this->getHeight())){
 			return array($this->getWidth(), $this->getHeight());
 		}
 			
