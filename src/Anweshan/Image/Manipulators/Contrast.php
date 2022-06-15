@@ -66,7 +66,7 @@ class Contrast extends BaseManipulator {
 	 * @return null|int The resolved contrast amount or NULL
 	 */
 	public function getContrast(){
-		if (!preg_match(parent::NUMERIC_REGEX, $this->con) || ($this->con < -100 || $this->con > 100)) 
+		if (null === $this->con || !preg_match(parent::NUMERIC_REGEX, $this->con) || ($this->con < -100 || $this->con > 100)) 
 		{
 			return;
 		}

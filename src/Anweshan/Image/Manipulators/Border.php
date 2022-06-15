@@ -163,15 +163,17 @@ class Border extends BaseManipulator {
 	 * @return Image The manipulated image
 	 */
 	public function runOverlay(Image $image, float $width, string $color) : Image{
-		$half = $width / 2;
-		$closure = function($draw) use ($width, $color) {
+		$half = (int)round($width / 2);
+		
+		$callback = function($draw) use ($width, $color) {
 			$draw->border($width, $color);
 		};
+		
 		return $image->rectangle(
 				$half, $half,
-				$image->width() - $half,
-				$image->height() - $half,
-				$closure);
+				(int)(round($image->width() - $half)),
+				(int)(round($image->height() - $half)),
+				$callback);
 	}
 
 	/**
@@ -183,12 +185,13 @@ class Border extends BaseManipulator {
 	 */
 	public function runShrink(Image $image, float $width, string $color) :Image
 	{
+		$twice = (int) round($width * 2);
 		return $image->resize(
-				$image->width() - ($width * 2),
-				$image->height() - ($width * 2)
+				(int)(round($image->width() - $twice)),
+				(int)(round($image->height() - $twice))
 				)->resizeCanvas(
-					$width * 2,
-					$width * 2,
+					$twice,
+					$twice,
 					'center',
 					true,
 					$color);
@@ -203,9 +206,10 @@ class Border extends BaseManipulator {
 	 */
 	public function runExpand(Image $image, float $width, string $color) : Image
 	{
+		$twice = (int)round($width * 2);
 		return $image->resizeCanvas(
-				$width * 2,
-				$width * 2,
+				$twice,
+				$twice,
 				'center',
 				true,
 				$color

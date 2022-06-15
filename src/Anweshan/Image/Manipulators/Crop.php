@@ -54,6 +54,11 @@ class Crop extends BaseManipulator {
 	 * @see \Anweshan\Image\Manipulators\BaseManipulator::run()
 	 */
 	public function run(Image $image) : Image{
+
+		if (null === $this->crop) {
+            return $image;
+        }
+
 		$coordinates = $this->getCoordinates($image);
 		if ($coordinates) {
 			// Limiting the co-ordinates

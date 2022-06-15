@@ -68,7 +68,7 @@ class Orientation extends BaseManipulator {
 			return $image->orientate();
 		}
 		
-		return $image->rotate($or, $bg);
+		return $image->rotate((float)$or, $bg);
 	}
 	
 	

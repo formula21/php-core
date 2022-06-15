@@ -73,7 +73,7 @@ class Gamma extends BaseManipulator {
 	 * @return null|float The resolved gamma amount.
 	 */
 	public function getGamma(){
-		if (!preg_match(self::NUMERIC_REGEX, $this->gam) || $this->gam < 0.1 || $this->gam > 9.99) {
+		if (null === $this->gam && !preg_match(self::NUMERIC_REGEX, $this->gam) || $this->gam < 0.1 || $this->gam > 9.99) {
 			return;			
 		}
 		return (float) $this->gam;
