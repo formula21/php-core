@@ -350,17 +350,6 @@ class Size extends BaseManipulator {
 	}
 	
 	/**
-	 * The function gets the aspect ratio.
-	 * @param int $width The width of an image.
-	 * @param int $height The height of an image.
-	 * @return float The aspect ratio. 
-	 */
-	private static function getAspectRatio(int $width, int $height) : float
-	{
-		return floatval($width/$height);
-	}
-
-	/**
 	 * Resolve the crop resize dimensions.
 	 * @param  Image   $image  The source image.
 	 * @param  integer $width  The width.
@@ -559,7 +548,18 @@ class Size extends BaseManipulator {
 			
 		return $image->crop($width, $height, $offset_x, $offset_y);
 	}
-	
+
+	/**
+	 * The function gets the aspect ratio.
+	 * @param int $width The width of an image.
+	 * @param int $height The height of an image.
+	 * @return float The aspect ratio. 
+	 */
+	private static function getAspectRatio(int $width, int $height) : float
+	{
+		return floatval($width/$height);
+	}
+
 	/**
 	 * Returns the Size manipulation properties.
 	 * {@inheritDoc}
