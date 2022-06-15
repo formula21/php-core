@@ -485,6 +485,20 @@ class Size extends BaseManipulator {
 			$constraint->aspectRatio();
 		});
 	}
+
+		/**
+     * Perform fill-max resize image manipulation.
+     *
+     * @param Image $image  The source image.
+     * @param int   $width  The width.
+	 * @param int   $height The height.
+     *
+	 * @return Image The manipulated image.
+     */
+    public function runFillMaxResize(Image $image, $width, $height) : Image
+    {
+		return $this->runContainResize($image, $width, $height)->resizeCanvas($width, $height, 'center');
+    }
 	
 	/**
 	 * Perform fill resize image manipulation.
