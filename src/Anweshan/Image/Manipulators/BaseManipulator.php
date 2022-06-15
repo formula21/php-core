@@ -53,6 +53,7 @@ abstract class BaseManipulator implements ManipulatorInterface {
 			'image/webp'=>NULL,
 			'image/gif'=>NULL,
 			'image/png'=>NULL,
+			'image/avif'=>NULL,
 	);
 	
 	public $mimes;
