@@ -133,7 +133,7 @@ $ php composer.phar require formula21/php-core
 That hopefully installs the latest version of `php-core` as vendor for your project.
 
 ## Manipulate it?
-If you want to manipulate images place in the directory at path/to/dir/of/images (Can be both full or relative path), you can use our manipulation parameter according to the documentation. You can now see how we manipulate images in [tests\image.php file](tests/image.php).
+If you want to manipulate images place in the directory at path/to/dir/of/images (Can be both full or relative path), you can use our manipulation parameter according to the documentation. You can now see how we manipulate images in [examples\image.php file](examples/image.php).
 
 ## Extending the Options
 
