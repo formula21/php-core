@@ -166,7 +166,7 @@ class Size extends BaseManipulator {
 	public function run(Image $image) : Image
 	{
 		// Get the width & height, fit property & device pixel ratio
-		list($width, $height, $fit, $dpr) = array_merge($this->getSquare(), [$this->getFit(), $this->getDpr()]);
+		list($width, $height, $fit, $dpr) = array_merge($this->getSquare($image), [$this->getFit(), $this->getDpr()]);
 		
 		// If we have missing heights, we will resolve the same
 		list($width, $height) = $this->resolveMissingDimensions($image, $width, $height);
@@ -262,10 +262,10 @@ class Size extends BaseManipulator {
 	 * 
 	 * @return integer[]|array If the property is set expect an array with properties width and height OR default values.
 	 */
-	public function getSquare()
+	public function getSquare(Image $image)
 	{
 		
-		if(!is_numeric($this->sq) || $this->sq <= 0 || $this->sq > min($this->getWidth(), $this->getHeight())){
+		if(!is_numeric($this->sq) || $this->sq <= 0 || $this->sq > min($image->getWidth(), $image->getHeight())){
 			return array($this->getWidth(), $this->getHeight());
 		}
 			
