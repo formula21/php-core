@@ -282,11 +282,7 @@ class Size extends BaseManipulator {
 	 */
 	public function getDpr() : float
 	{
-		if (!is_numeric($this->dpr) || ($this->dpr < 0 || $this->dpr > 8)) {
-			return 1.0;
-		}
-		
-		return (float) $this->dpr;
+		return !is_numeric($this->dpr) || ($this->dpr < 0 || $this->dpr > 8) ? 1.0 : (float) $this->dpr;
 	}
 	
 	/**
@@ -573,4 +569,3 @@ class Size extends BaseManipulator {
 	}
 
 }
-
