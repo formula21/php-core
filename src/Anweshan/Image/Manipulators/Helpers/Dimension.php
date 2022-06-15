@@ -41,6 +41,12 @@ use Intervention\Image\Image;
 class Dimension {
 	
 	/**
+	 * The regular expression to evaluate
+	 * @var string DIMENSION_REGEX The regular expression to evaluate.
+	 */
+	public const DIMENSION_REGEX = '/^(\d{1,2}(?!\d)|100)(w|h)$/';
+
+	/**
 	 * The source image.
 	 * @var Image $image The source image.
 	 */
@@ -77,12 +83,12 @@ class Dimension {
 		
 		$matches = array();
 		
-		if (preg_match('/^(\d{1,2}(?!\d)|100)(w|h)$/', $value, $matches)) {
+		if (preg_match(self::DIMENSION_REGEX, $value, $matches)) {
 			if ($matches[2] === 'h') {
-				return (float) $this->image->height() * ($matches[1] / 100);
+				return (float) $this->image->height() * ((float) $matches[1] / 100);
 			}
 			
-			return (float) $this->image->width() * ($matches[1] / 100);
+			return (float) $this->image->width() * ((float) $matches[1] / 100);
 		}
 	}
 }
