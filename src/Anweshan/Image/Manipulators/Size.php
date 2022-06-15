@@ -569,7 +569,7 @@ class Size extends BaseManipulator {
 	 * {@inheritDoc}
 	 */
 	public function __toString(): string {
-		return parent::setParams('w','h','sq','fit','dpr');
+		return parent::getProperties('w','h','sq','fit','dpr');
 	}
 
 }
