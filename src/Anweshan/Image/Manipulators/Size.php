@@ -53,6 +53,8 @@ use Intervention\Image\Size as _Size;
  * 
  * - contain: *Default*. Resizes the image to fit within the width and height boundaries without cropping, distorting or altering the aspect ratio.
  * 
+ * - fill-max: Resizes the image to fit within the width and height boundaries without cropping but upscaling the image if it’s smaller. The finished image will have remaining space on either width or height (except if the aspect ratio of the new image is the same as the old image). The remaining space will be filled with the background color. The resulting image will match the constraining dimensions.
+ * 
  * - fill: Resizes the image to fit within the width and height boundaries without cropping or distorting the image, and the remaining space is filled with the background color. The resulting image will match the constraining dimensions.
  * 
  * - max: Resizes the image to fit within the width and height boundaries without cropping, distorting or altering the aspect ratio, and will also not increase the size of the image if it is smaller than the output size.
@@ -94,13 +96,14 @@ class Size extends BaseManipulator {
 	 * The array representing property fit.
 	 * The fits are following:
 	 * 1. contain (DEFAULT)
-	 * 2. fill
-	 * 3. max
-	 * 4. stretch
-	 * 5. crop: Not included see description.
+	 * 2. fill-max (BEST RESULTS)
+	 * 3. fill (BETTER RESULTS)
+	 * 4. max (RESULTS MAY VARY)
+	 * 5. stretch (RESULTS MAY LOOK DISTORTED)
+	 * 6. crop (undocumented. See Crop Property)
 	 * @var string[] FIT_PROPERTY The array representing property fit. 
 	 */
-	public const FIT_PROPERTY = ['contain', 'fill', 'max', 'stretch'];
+	public const FIT_PROPERTY = ['contain', 'fill-max', 'fill', 'max', 'stretch'];
 	
 	/**
 	 * The regular expression of crop when fit=crop-*.
@@ -380,6 +383,7 @@ class Size extends BaseManipulator {
 	{
 		$a = [
 			'contain'=>'runContainResize',
+			'fill-max'=>'runFillMaxResize',
 			'fill'=>'runFillResize',
 			'max'=>'runMaxResize',
 			'stretch'=>'runStretchResize',
