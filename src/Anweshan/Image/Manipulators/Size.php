@@ -272,13 +272,7 @@ class Size extends BaseManipulator {
 	 */
 	public function getFit() 
 	{
-		if(in_array($this->fit, self::FIT_PROPERTY, true)){
-			return $this->fit;
-		}else if(preg_match(self::FIT_CROP_REGEX, $this->fit)){
-			return 'crop';
-		}else{
-			return 'contain';
-		}
+		return in_array(($this->fit ?? 'contain'), self::FIT_PROPERTY, true) ? ($this->fit ?? 'contain') : (preg_match(self::FIT_CROP_REGEX, $this->fit) ? 'crop' : 'contain');
 		
 	}
 	
