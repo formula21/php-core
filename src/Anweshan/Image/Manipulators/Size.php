@@ -165,18 +165,8 @@ class Size extends BaseManipulator {
 	 */
 	public function run(Image $image) : Image
 	{
-		// Get the width
-		$width = $this->getWidth();
-		// Get the height
-		$height = $this->getHeight();
-		// Get the square
-		// If it is not a square, you will get width and height as same
-		list($width, $height) = $this->getSquare();
-		
-		// Get the fit property
-		$fit = $this->getFit();
-		// Get the device pixel ratio
-		$dpr = $this->getDpr();
+		// Get the width & height, fit property & device pixel ratio
+		list($width, $height, $fit, $dpr) = array_merge($this->getSquare(), [$this->getFit(), $this->getDpr()]);
 		
 		// If we have missing heights, we will resolve the same
 		list($width, $height) = $this->resolveMissingDimensions($image, $width, $height);
@@ -198,8 +188,7 @@ class Size extends BaseManipulator {
 	
 	/**
 	 * Set the maximum image size in pixels.
-	 * @param integer|null $maxImageSize The maximum image size in `pixels`. 
-	 * 									  Default is `NULL`.
+	 * @param integer|null $maxImageSize The maximum image size in `pixels`. Default is `NULL`.
 	 * @return void
 	 */
 	public function setMaxImageSize($maxImageSize = null)
