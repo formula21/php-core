@@ -83,7 +83,7 @@ class Directory implements DirectoryInterface
      */
     protected function setDir(?string $dir){
         if(is_string($dir) && strlen($dir) > 0){
-			if(DIRECTORY_SEPARATOR != '/') $dir = Util::trim($dir, '/', DIRECTORY_SEPARATOR);
+			if(DIRECTORY_SEPARATOR !== '/') $dir = Util::trim($dir, '/', DIRECTORY_SEPARATOR);
             if(is_dir($dir) && file_exists($dir)){
                 $dir = str_replace('/', DIRECTORY_SEPARATOR, $dir);
                 $this->dir = $dir;
