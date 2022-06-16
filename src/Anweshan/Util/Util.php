@@ -67,6 +67,7 @@ class Util
     
     public static function sanitizePath(string $path){
         $path = str_replace(self::URL_SEPARATOR, DIRECTORY_SEPARATOR, $path);
+        if(DIRECTORY_SEPARATOR !== '/') $path = Util::ltrim($path, DIRECTORY_SEPARATOR, self::URL_SEPARATOR);
         $path = Util::rtrim($path, DIRECTORY_SEPARATOR, self::URL_SEPARATOR);
         return $path;
     }
@@ -85,7 +86,7 @@ class Util
 		}
 		
         $r = Util::ltrim(join(DIRECTORY_SEPARATOR, $segments), DIRECTORY_SEPARATOR);
-		
+
 		if($d){
 			$r = '/'.$r;
 		}
